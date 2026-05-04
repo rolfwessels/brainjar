@@ -1,0 +1,34 @@
+# Secrets / credentials — must NEVER end up in any image
+.env
+.env.*
+*.env
+.aws
+*.pem
+*.key
+secrets/
+
+# VCS / IDE / OS
+.git
+.gitignore
+.idea
+*.iml
+.vscode
+.cursor
+.DS_Store
+Thumbs.db
+
+# Build / cache artefacts
+.gradle
+build
+out
+target
+node_modules
+tmp
+temp
+
+# Personal / local-only
+PR_REVIEW.md
+zshrc
+memorySampleSet
+benchmark
+docs

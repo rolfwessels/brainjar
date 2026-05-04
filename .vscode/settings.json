@@ -1,0 +1,15 @@
+{
+  "files.autoSave": "afterDelay",
+  "cSpell.words": [
+    "brainjar",
+    "graphqls",
+    "bootjar",
+    "gradlew"
+  ],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.gradle": true,
+    "**/build": true,
+    "**/.idea": true
+  }
+}

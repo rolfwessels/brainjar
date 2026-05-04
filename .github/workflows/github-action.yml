@@ -1,0 +1,64 @@
+name: Java CI
+
+on:
+  push:
+    branches: 
+      - 'main'
+    tags:        
+      - 'v*'
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    if: "!contains(github.ref, 'refs/tags/v')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Test
+        run: make test
+  publish-dev:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Publish
+        run: make publish
+      - name: Build Docker image
+        run: make docker-build
+      - name: Push images to Docker Hub
+        if: github.ref == 'refs/heads/main' || startsWith(github.event.head_commit.message, 'deploy')
+        run: make #docker-login docker-push deploy env=dev
+  publish-prod:
+    if: contains(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Push images
+        run: make #docker-pull-short-tag  docker-tag-env docker-push deploy env=latest

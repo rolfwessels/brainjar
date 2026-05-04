@@ -1,0 +1,27 @@
+services:
+  dev:
+    container_name: brain-jar-dev
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/brain-jar"
+      - "./.aws:/root/.aws"
+      - "./zshrc:/root/.zshrc"
+      - brain-jar-cache:/cache
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /brain-jar/.gradle
+      - /brain-jar/build
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - HISTFILE=/cache/.bash_history
+    entrypoint: top -b
+    logging:
+      driver: none
+
+volumes:
+  brain-jar-cache:

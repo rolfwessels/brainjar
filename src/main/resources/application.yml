@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: brain-jar
+  threads:
+    virtual:
+      enabled: true
+  main:
+    web-application-type: none
+
+discord:
+  token: ${DISCORD_BOT_TOKEN}
+  guild-id: ${DISCORD_GUILD_ID:}
+
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: ${OPENAI_API_KEY}
+      model-name: ${OPENAI_MODEL:gpt-5.2}
+      temperature: 0.7
+      log-requests: true
+      log-responses: true
+
+ollama:
+  model-name: ${OLLAMA_MODEL:gemma4:e4b}
+
+brave:
+  api-key: ${BRAVE_API_KEY}
+
+brainjar:
+  voice:
+    transcription-model: ${VOICE_TRANSCRIPTION_MODEL:gpt-4o-mini-transcribe}
+    max-size-bytes: 25165824
+    max-duration-seconds: 300
+  scheduling:
+    timezone: ${BRAINJAR_TIMEZONE:UTC}
+    pool-size: 2
+    path: ${BRAINJAR_SCHEDULES_PATH:}

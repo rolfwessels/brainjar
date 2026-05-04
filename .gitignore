@@ -1,0 +1,46 @@
+# Compiled
+*.class
+*.jar
+*.war
+
+# Build output
+build/
+target/
+out/
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# IDE
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+*.log
+
+# Project
+src/main/resources/version.json
+PR_REVIEW.md
+.aws/
+
+# MemPalace (local dev tool)
+entities.json
+mempalace.yaml
+
+# Benchmark run outputs (see .cursor/skills/retrieval-benchmark/scripts/run-retrieval-benchmark.sh)
+temp/*
+!temp/.gitignore
+memorySampleSet/memory_export.md
+logs/

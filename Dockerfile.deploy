@@ -1,0 +1,26 @@
+FROM eclipse-temurin:21-jdk-noble AS build
+
+WORKDIR /app
+COPY gradle/ gradle/
+COPY gradlew build.gradle.kts settings.gradle.kts gradle.properties ./
+RUN chmod +x gradlew && ./gradlew --no-daemon dependencies
+
+COPY src/ src/
+ARG VERSION=0.1.0
+RUN printf '{ "version": "%s" }\n' "${VERSION}" > src/main/resources/version.json
+RUN ./gradlew --no-daemon bootJar -Pversion=${VERSION}
+
+# glibc-based runtime: ONNX Runtime (used by langchain4j embeddings) ships a
+# glibc-linked libonnxruntime.so. Alpine/musl bases fail with
+# "ld-linux-x86-64.so.2: No such file" or "__vsnprintf_chk: symbol not found".
+FROM eclipse-temurin:21-jre-noble
+
+ARG VERSION=0.1.0
+LABEL org.opencontainers.image.title="brain-jar" \
+      org.opencontainers.image.version="${VERSION}"
+
+WORKDIR /app
+COPY --from=build /app/build/libs/brain-jar.jar app.jar
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]

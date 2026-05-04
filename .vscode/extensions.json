@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "ms-azuretools.vscode-docker",
+    "mhutchie.git-graph",
+    "vscjava.vscode-java-pack",
+    "vscjava.vscode-gradle",
+    "ms-vscode.makefile-tools"
+  ]
+}

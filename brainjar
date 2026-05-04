@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ -f "$SCRIPT_DIR/.env" ]]; then
+  set -a
+  # shellcheck disable=SC1091
+  source "$SCRIPT_DIR/.env"
+  set +a
+fi
+
+use_cli_profile=false
+for a in "$@"; do
+  case "$a" in
+    --mine | --search | --remove-shelf | --briefing | --list-shelves | --latest | --list-jobs | --export-kg) use_cli_profile=true; break ;;
+  esac
+done
+
+if [[ "$use_cli_profile" == true ]]; then
+  exec "$SCRIPT_DIR/gradlew" -q bootRun --args="$(printf '%s ' --spring.profiles.active=cli "$@" | sed 's/[[:space:]]*$//')"
+else
+  exec "$SCRIPT_DIR/gradlew" bootRun --args="$(printf '%s ' "$@" | sed 's/[[:space:]]*$//')"
+fi

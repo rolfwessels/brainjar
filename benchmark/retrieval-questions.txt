@@ -1,0 +1,13 @@
+# One question per line. Lines starting with # are ignored.
+# Edit this file to change the benchmark; re-run .cursor/skills/retrieval-benchmark/scripts/run-retrieval-benchmark.sh
+
+What default chunk size and overlap does Recall use for splitting text?
+Where do you configure the Brave Search API key for Perry?
+What Spring Boot version is documented for this project?
+What command runs MemPalace search from the terminal?
+According to the vision doc what is the first milestone for the POC?
+What file path stores Recall embeddings on disk?
+What JDA major version does the discord-java research mention?
+What three topic types does AAAK-style SummaryCompressor extract?
+What is the default OpenAI model name in sample.env?
+What does the MemPalace integration plan recommend starting with?

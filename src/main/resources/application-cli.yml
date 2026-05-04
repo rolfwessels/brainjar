@@ -1,0 +1,13 @@
+spring:
+  main:
+    banner-mode: "off"
+    log-startup-info: false
+
+logging:
+  level:
+    root: error
+    org.springframework: error
+    dev.langchain4j: error
+    net.dv8tion: error
+    ai.djl: error
+    brainjar: error
