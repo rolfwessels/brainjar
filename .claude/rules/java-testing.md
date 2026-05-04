@@ -1,9 +1,9 @@
 ---
 description: Java testing conventions and TDD practices
-globs:
-  - "**/*Test.java"
-  - "**/*Tests.java"
-  - "**/*IT.java"
+paths:
+    - '**/*Test.java'
+    - '**/*Tests.java'
+    - '**/*IT.java'
 ---
 
 # Java Testing Conventions

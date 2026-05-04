@@ -1,7 +1,7 @@
 ---
 description: Java coding conventions and language preferences
-globs:
-  - "**/*.java"
+paths:
+    - '**/*.java'
 ---
 
 # Java Conventions
