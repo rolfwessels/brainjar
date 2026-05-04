@@ -16,6 +16,7 @@ import brainjar.recall.search.LayeredContext;
 import brainjar.recall.search.Searcher;
 import brainjar.recall.store.FilePageStore;
 import brainjar.recall.store.PageStore;
+import brainjar.recall.store.SqliteChatHistoryStore;
 import brainjar.recall.store.SummaryStore;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.onnx.allminilml6v2q.AllMiniLmL6V2QuantizedEmbeddingModel;
@@ -54,6 +55,12 @@ public class RecallConfig {
         var dbPath = Path.of(System.getProperty("user.home"), PALACE_DIR, KG_FILE);
         dbPath.getParent().toFile().mkdirs();
         return new KnowledgeGraph("jdbc:sqlite:" + dbPath);
+    }
+
+    @Bean
+    SqliteChatHistoryStore chatHistoryStore() {
+        var dbPath = Path.of(System.getProperty("user.home"), PALACE_DIR, KG_FILE);
+        return new SqliteChatHistoryStore("jdbc:sqlite:" + dbPath);
     }
 
     @Bean

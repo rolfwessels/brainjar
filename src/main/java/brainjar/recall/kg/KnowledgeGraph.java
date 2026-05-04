@@ -324,27 +324,6 @@ public class KnowledgeGraph implements AutoCloseable {
         return List.copyOf(states);
     }
 
-    public String getChatMessagesJson(String memoryId) {
-        try (var stmt = connection.prepareStatement(
-                "SELECT messages FROM chat_history WHERE memory_id = ?")) {
-            stmt.setString(1, memoryId);
-            var rs = stmt.executeQuery();
-            return rs.next() ? rs.getString("messages") : null;
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to read chat history for " + memoryId, e);
-        }
-    }
-
-    public void updateChatMessagesJson(String memoryId, String messagesJson) {
-        var sql = "INSERT INTO chat_history (memory_id, messages, updated_at) VALUES (?, ?, ?) "
-                + "ON CONFLICT(memory_id) DO UPDATE SET messages = excluded.messages, updated_at = excluded.updated_at";
-        executeUpdate(sql, memoryId, messagesJson, Instant.now().toString());
-    }
-
-    public void deleteChatMessages(String memoryId) {
-        executeUpdate("DELETE FROM chat_history WHERE memory_id = ?", memoryId);
-    }
-
     @Override
     public void close() {
         try {
@@ -386,12 +365,6 @@ public class KnowledgeGraph implements AutoCloseable {
                         extractor_version TEXT NOT NULL,
                         content_hash TEXT NOT NULL,
                         extracted_at TEXT NOT NULL
-                    )""");
-            stmt.execute("""
-                    CREATE TABLE IF NOT EXISTS chat_history (
-                        memory_id TEXT PRIMARY KEY,
-                        messages TEXT NOT NULL,
-                        updated_at TEXT NOT NULL
                     )""");
         }
     }

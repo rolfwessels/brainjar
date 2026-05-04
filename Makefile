@@ -10,7 +10,7 @@ docker-warning := ""
 RED=\033[0;31m
 GREEN=\033[0;32m
 NC=\033[0m # No Color
-versionPrefix := 0.1
+versionPrefix := 0.2
 version := $(versionPrefix).$(shell git rev-list HEAD --count)
 git-short-hash := $(shell git rev-parse --short=8 HEAD)
 version-suffix := ''
