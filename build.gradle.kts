@@ -48,7 +48,7 @@ dependencies {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    useJUnitPlatform { excludeTags("ollama") }
     jvmArgs("-javaagent:${mockitoAgent.asPath}")
     testLogging {
         events("passed", "skipped", "failed")

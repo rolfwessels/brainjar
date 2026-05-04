@@ -44,3 +44,4 @@ temp/*
 !temp/.gitignore
 memorySampleSet/memory_export.md
 logs/
+**/repo/

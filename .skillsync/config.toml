@@ -1,0 +1,3 @@
+registry = "/mnt/d/Software/Dropbox/Work/Home/skillsync-reg/registry"
+formats = ["claude"]
+bundles = ["rules/java-naming", "rules/java-testing", "skills/caveman"]

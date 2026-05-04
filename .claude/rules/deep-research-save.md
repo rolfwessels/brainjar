@@ -1,6 +1,6 @@
 ---
-description: When performing deep research, always save the results to the docs/research/ folder
 alwaysApply: true
+description: When performing deep research, always save the results to the docs/research/ folder
 ---
 
 # Deep Research → Save to docs/research/

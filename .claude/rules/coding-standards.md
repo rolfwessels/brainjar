@@ -1,6 +1,6 @@
 ---
-description: Read docs/how-to-ai.md at the start of every conversation for coding standards
 alwaysApply: true
+description: Read docs/how-to-ai.md at the start of every conversation for coding standards
 ---
 
 # Coding Standards
