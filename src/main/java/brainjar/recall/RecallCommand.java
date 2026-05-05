@@ -1,5 +1,6 @@
 package brainjar.recall;
 
+import brainjar.recall.export.BookExporter;
 import brainjar.recall.ingest.Miner;
 import brainjar.recall.kg.Entity;
 import brainjar.recall.kg.KnowledgeGraph;
@@ -52,6 +53,7 @@ public class RecallCommand implements ApplicationRunner {
     private final ExtractionQueue extractionQueue;
     private final JobStore jobStore;
     private final ScheduleProperties scheduleProperties;
+    private final BookExporter bookExporter;
     private final ApplicationContext context;
     private final Environment environment;
 
@@ -61,6 +63,7 @@ public class RecallCommand implements ApplicationRunner {
                          ExtractionQueue extractionQueue,
                          JobStore jobStore,
                          ScheduleProperties scheduleProperties,
+                         BookExporter bookExporter,
                          ApplicationContext context, Environment environment) {
         this.miner = miner;
         this.pageStore = pageStore;
@@ -70,6 +73,7 @@ public class RecallCommand implements ApplicationRunner {
         this.extractionQueue = extractionQueue;
         this.jobStore = jobStore;
         this.scheduleProperties = scheduleProperties;
+        this.bookExporter = bookExporter;
         this.context = context;
         this.environment = environment;
     }
@@ -90,6 +94,7 @@ public class RecallCommand implements ApplicationRunner {
             case LATEST -> executeLatest(parsed);
             case LIST_JOBS -> executeListJobs();
             case EXPORT_KG -> executeExportKg(parsed);
+            case EXPORT_MD -> executeExportMd(parsed);
             case REMINE -> executeRemine();
             default -> { }
         }
@@ -473,6 +478,35 @@ public class RecallCommand implements ApplicationRunner {
         shutdown(0);
     }
 
+    private void executeExportMd(ParsedArgs parsed) {
+        var defaultDir = Path.of(System.getProperty("user.home"), ".recall", "export");
+        var outputDir = parsed.paths().isEmpty() ? defaultDir : parsed.paths().getFirst();
+
+        var pages = pageStore.recent(Integer.MAX_VALUE);
+        int written;
+        try {
+            written = bookExporter.export(pages, outputDir, parsed.shelfName());
+        } catch (IOException e) {
+            err("Failed to write export: " + e.getMessage());
+            shutdown(1);
+            return;
+        }
+
+        if (cliQuiet()) {
+            if (written == 0) {
+                var qualifier = parsed.shelfName() != null
+                        ? " on shelf \"" + parsed.shelfName() + "\""
+                        : "";
+                out("(no books to export" + qualifier + ")");
+            } else {
+                out("Exported " + written + " book(s) to " + outputDir);
+            }
+        } else {
+            log.info("Exported {} book(s) to {}", written, outputDir);
+        }
+        shutdown(0);
+    }
+
     private static void writeFile(Path path, String content) throws IOException {
         if (path.getParent() != null) {
             Files.createDirectories(path.getParent());
@@ -662,7 +696,7 @@ public class RecallCommand implements ApplicationRunner {
         return singleLine.substring(0, maxLen) + "...";
     }
 
-    enum Command { NONE, MINE, SEARCH, REMOVE_SHELF, BRIEFING, LIST_SHELVES, LATEST, LIST_JOBS, EXPORT_KG, REMINE }
+    enum Command { NONE, MINE, SEARCH, REMOVE_SHELF, BRIEFING, LIST_SHELVES, LATEST, LIST_JOBS, EXPORT_KG, EXPORT_MD, REMINE }
 
     record ParsedArgs(Command command, List<Path> paths, String shelfName, String query, int maxResults, String format) {}
 
@@ -724,6 +758,10 @@ public class RecallCommand implements ApplicationRunner {
                 }
                 case "--export-kg" -> {
                     command = Command.EXPORT_KG;
+                    collectingPaths = true;
+                }
+                case "--export-md" -> {
+                    command = Command.EXPORT_MD;
                     collectingPaths = true;
                 }
                 case "--remine" -> {

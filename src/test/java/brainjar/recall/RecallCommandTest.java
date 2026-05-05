@@ -304,6 +304,29 @@ class RecallCommandTest {
     }
 
     @Test
+    void parseArgs_WhenExportMd_ShouldSetCommand() {
+        // act
+        var result = RecallCommand.parseArgs(new String[]{"--export-md"});
+
+        // assert
+        assertThat(result.command()).isEqualTo(RecallCommand.Command.EXPORT_MD);
+        assertThat(result.paths()).isEmpty();
+        assertThat(result.shelfName()).isNull();
+    }
+
+    @Test
+    void parseArgs_WhenExportMdWithShelfAndPath_ShouldExtractAll() {
+        // act
+        var result = RecallCommand.parseArgs(
+                new String[]{"--export-md", "/tmp/export", "--shelf", "docs"});
+
+        // assert
+        assertThat(result.command()).isEqualTo(RecallCommand.Command.EXPORT_MD);
+        assertThat(result.shelfName()).isEqualTo("docs");
+        assertThat(result.paths()).containsExactly(Path.of("/tmp/export"));
+    }
+
+    @Test
     void parseArgs_WhenNoCommand_ShouldReturnNone() {
         // act
         var result = RecallCommand.parseArgs(new String[]{"--other", "value"});
