@@ -80,6 +80,7 @@ _Avoid_: import, index, sync
 Writing Books back to disk as human-readable markdown files via the CLI (`--export-md`). One file per Book, named `<date>-<title>.md`, written under a shelf subdirectory. Distinct from knowledge graph export (`--export-kg`).
 _Avoid_: dump, backup, download
 
+
 ## Relationships
 
 - A **Shelf** contains zero or more **Books**
