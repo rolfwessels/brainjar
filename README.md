@@ -116,6 +116,9 @@ Mine, search, and manage Perry's long-term memory:
 ./brainjar --latest -n 5 --shelf movies  # 5 most recent pages on one shelf
 ./brainjar --list-jobs                   # all scheduled one-shot/cron jobs
 ./brainjar --export-kg                   # dump the knowledge graph for external viz
+./brainjar --export-md                   # export all books as markdown files
+./brainjar --export-md --shelf movies    # export one shelf only
+./brainjar --export-md /path/to/out      # override output directory
 ```
 
 `--list-shelves` enumerates every shelf with its page count, sorted
@@ -143,6 +146,11 @@ to `~/.recall/export/`:
 Pass a path (file for cypher, directory for csv/tsv) to override the
 default location. The export is idempotent — re-running against the
 same Neo4j database updates properties in place.
+
+`--export-md` writes one markdown file per Book to `~/.recall/export/<shelf>/<date>-<title>.md`.
+Each file contains the Book's Pages concatenated in order, making the export human-readable and
+diff-friendly. Use `--shelf` to limit to one shelf, or pass an output directory to override the
+default location.
 
 `--briefing` prints the compact "what's in memory" block that gets
 injected into Perry's system prompt on every turn — shelf inventory

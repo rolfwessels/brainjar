@@ -1,0 +1,26 @@
+[[entries]]
+  bundle = "rules/java-naming"
+  format = "claude"
+  target = ".claude/rules/java-naming.md"
+  hash = "a234d6b62f07ea3fcb173f4d5ba090cfae7526e245314ea06b689454aa3066a3"
+  registry_hash = "2c6e69117a16faa11f25d7cd2a5388fc7199ace713c4d944a444c4b82e270bd1"
+  local_hash = "a234d6b62f07ea3fcb173f4d5ba090cfae7526e245314ea06b689454aa3066a3"
+  state = "clean"
+
+[[entries]]
+  bundle = "rules/java-testing"
+  format = "claude"
+  target = ".claude/rules/java-testing.md"
+  hash = "fa3ab64d65e5370cd5b2a3f2792fc2609decd44e416508d5026bc412c2a29e1e"
+  registry_hash = "12515b4ed960235d24f52e50f3bc26cf79b8dd5da104219f5e66dc2ba68e3ee0"
+  local_hash = "fa3ab64d65e5370cd5b2a3f2792fc2609decd44e416508d5026bc412c2a29e1e"
+  state = "clean"
+
+[[entries]]
+  bundle = "skills/caveman"
+  format = "claude"
+  target = ".claude/skills/caveman/SKILL.md"
+  hash = "a6902f7594ffdf80ad4b5862cde71baab94d2da0c94d33b2c2d5dd434250746d"
+  registry_hash = "a6902f7594ffdf80ad4b5862cde71baab94d2da0c94d33b2c2d5dd434250746d"
+  local_hash = "a6902f7594ffdf80ad4b5862cde71baab94d2da0c94d33b2c2d5dd434250746d"
+  state = "clean"
